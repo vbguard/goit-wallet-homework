@@ -1,1 +1,1 @@
-# goit-wallet-homework
+# Домашні завдання
