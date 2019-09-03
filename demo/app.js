@@ -7,6 +7,7 @@ const expressDomain = require('express-domain');
 const config = require("./config");
 const notFound = require('./middleware/not-found');
 const errorHandler = require('./middleware/error-handler');
+const validationErrorHandler = require('./middleware/validation-error-handler');
 
 const PORT = config.PORT;
 
@@ -15,6 +16,24 @@ const routes = require('./routes/routes');
 app.use(expressDomain());
 
 // write connection to DB
+// https://remotemysql.com/login.php can be used for free MySQL db
+// www.elephantsql.com/‎
+
+
+
+/*
+* Username: kLtnk2xqwN
+
+Database name: kLtnk2xqwN
+
+Password: Lw8Zr7l2Dv
+
+Server: remotemysql.com
+
+Port: 3306
+* 
+* */
+
 
 // use logger
 app.use(logger("dev"));
@@ -28,6 +47,7 @@ app.use(bodyParser.urlencoded({extended: false, limit: '2mb'}));
 
 app.use("/api", routes);
 app.use('/*', notFound);
+app.use(validationErrorHandler);
 app.use(errorHandler);
 
 // add error handlers
