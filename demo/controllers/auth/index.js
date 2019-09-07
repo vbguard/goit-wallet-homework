@@ -5,8 +5,6 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('../../config');
 
-class AuthError extends Error {}
-
 module.exports = {
   async login({email, password}) {
     const user = await Users.findOne({ where: { email }});
@@ -15,8 +13,8 @@ module.exports = {
       return;
     }
     
-    if (!bcrypt.compareSync(password, user.password)) {
-      throw new AuthError('Unauthorized');
+    if (!user.password || !bcrypt.compareSync(password, user.password)) {
+      throw new jwt.JsonWebTokenError('Unauthorized');
     }
 
     return this.generateTokens(user);
@@ -55,7 +53,5 @@ module.exports = {
       accessToken,
       refreshToken
     }
-  },
-  
-  AuthError
+  }
 };
