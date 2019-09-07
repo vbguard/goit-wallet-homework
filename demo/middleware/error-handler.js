@@ -1,4 +1,12 @@
+
+
+const { JsonWebTokenError } = require('jsonwebtoken');
+
 module.exports = function internalServerError(err, req, res, next) {
+  if (err instanceof JsonWebTokenError) {
+    return res.status(401).json(err);
+  }
+  
   if (err.domain) {
     try {
       const killtimer = setTimeout(() => process.exit(1),10000);

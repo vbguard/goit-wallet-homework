@@ -5,35 +5,17 @@ const logger = require("morgan");
 const bodyParser = require('body-parser');
 const expressDomain = require('express-domain');
 const config = require("./config");
+const cookieParser = require('cookie-parser');
 const notFound = require('./middleware/not-found');
 const errorHandler = require('./middleware/error-handler');
 const validationErrorHandler = require('./middleware/validation-error-handler');
-
+const passport = require('./auth');
+const session = require('express-session');
 const PORT = config.PORT;
 
 const routes = require('./routes/routes');
 
 app.use(expressDomain());
-
-// write connection to DB
-// https://remotemysql.com/login.php can be used for free MySQL db
-// www.elephantsql.com/‎
-
-
-
-/*
-* Username: kLtnk2xqwN
-
-Database name: kLtnk2xqwN
-
-Password: Lw8Zr7l2Dv
-
-Server: remotemysql.com
-
-Port: 3306
-* 
-* */
-
 
 // use logger
 app.use(logger("dev"));
@@ -44,13 +26,26 @@ app.get("/", express.static("public"));
 
 app.use(bodyParser.json({limit: '2mb'}));
 app.use(bodyParser.urlencoded({extended: false, limit: '2mb'}));
+app.use(cookieParser());
+app.use(
+  session({
+    resave: false,
+    saveUninitialized: true,
+    secret: config.cookieSecret
+  })
+);
+
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use("/api", routes);
 app.use('/*', notFound);
+
+// add error handlers
 app.use(validationErrorHandler);
 app.use(errorHandler);
 
-// add error handlers
 
 const server = app.listen(PORT, () => {
   console.log(`➡️  Wallet app listening on port ${PORT} 🤟`);
@@ -58,4 +53,4 @@ const server = app.listen(PORT, () => {
 
 app.set('server', server);
 
-//Run app, then load http://localhost:PORT in a browser to see the output.
+
