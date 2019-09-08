@@ -73,6 +73,22 @@ router.get('/transactions', authMiddleware, async (req, res) => {
 });
 
 /**
+ * @description should change current user password and return status code 200 if succeeded 
+ * */
+router.patch('/change-password', (req, res) => {
+  // TODO implement set password logic here
+  res.sendStatus(200);
+});
+
+/**
+ * @description should return user balance in json format in base currency
+ * */
+router.get('/balance', (req, res) => {
+  // TODO implement fetching balance here
+  res.sendStatus(200);
+});
+
+/**
  * @description should add expense transaction for current user
  * */
 router.post("/costs", authMiddleware, (req, res) => {
