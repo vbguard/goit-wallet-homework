@@ -32,10 +32,11 @@
     "passport": "^0.4.0",
     "passport-linkedin-oauth2": "^2.0.0",
     "sequelize": "^5.18.1",
+    "morgan": "^1.9.1",
     "sequelize-cli": "^5.5.1"
   },
   "devDependencies": {
-    "morgan": "^1.9.1",
+    
     "nodemon": "^1.19.1"
   },
   "engines": {
