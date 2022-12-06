@@ -21,9 +21,9 @@
   "homepage": "https://github.com/vbguard/goit-wallet-homework#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "body-parser": "^1.19.0",
+    "body-parser": "^1.20.1",
     "cookie-parser": "^1.4.4",
-    "express": "^4.17.1",
+    "express": "^4.18.2",
     "express-domain": "^1.0.5",
     "express-session": "^1.16.2",
     "jsonwebtoken": "^8.5.1",
